@@ -1,0 +1,24 @@
+extends ../layouts/layout
+block content
+  .row
+    each product in products
+      .col-sm-3
+        article.col-item
+          .photo
+            .options
+              a.btn.btn-default(type='submit', data-toggle='tooltip', data-placement='top', title='Add to wish list')
+                i.fa.fa-heart
+              a.btn.btn-default(type='submit', data-toggle='tooltip', data-placement='top', title='Compare')
+                i.fa.fa-exchange
+            .options-cart
+              a.btn.btn-default(href='/add-to-cart/'+product.id ,title='Add to cart')
+                span.fa.fa-shopping-cart
+            a(href='/product/'+product.id)
+              img.img-responsive(src=product.imagePath, alt='Product Image')
+            .info
+              .row
+                .price-details.col-md-6
+                  p.details= product.description
+                  h1.clearfix.product-name= product.title
+                  span.price-new= product.price + '$'
+          

@@ -1,0 +1,52 @@
+extends ../layouts/layout
+block content
+  if session.cart
+    .container
+      table#cart.table.table-hover.table-condensed
+        thead
+          tr
+            th(style='width:50%') Product
+            th(style='width:10%') Price
+            th(style='width:8%') Quantity
+            th.text-center(style='width:22%') Subtotal
+            th(style='width:10%')
+        tbody
+        each product in products
+            tr
+              td(data-th='Product')
+                .row
+                  .col-sm-2.hidden-xs
+                    img.img-responsive(src= product.item.imagePath, alt='...')
+                  .col-sm-10
+                    h4.nomargin= product.item.title
+                    - p
+                        = product.item.description.substring(0, 200) + '...'
+                      
+              td(data-th='Price')= '$' + product.item.price
+              td(data-th='Quantity')
+                input.form-control.text-center(type='number', value= product.qty) 
+              td.text-center(data-th='Subtotal')= '$' + Math.round(product.totalSubPrice * 100) / 100
+              td.actions(data-th='')
+                button.btn.btn-info.btn-sm
+                  i.glyphicon.glyphicon-info-sign
+                button.btn.btn-danger.btn-sm
+                  i.fa.fa-trash-o
+        tfoot
+          tr
+            td
+              a.btn.btn-warning(href='/')
+                i.fa.fa-angle-left
+                |  Continue Shopping
+            td.hidden-xs(colspan='2')
+            td.hidden-xs.text-center
+              - strong
+                != '<strong> Total: ' + '$' + Math.round(session.cart.totalPrice * 100) / 100 + '</strong>'
+            td
+              a.btn.btn-success.btn-block(href='/checkout')
+                | Checkout 
+                i.fa.fa-angle-right
+
+  else
+    .row
+      .col-sm-6.col-md-offset-3.col-sm-offset-3
+        h2 No Items in the Cart

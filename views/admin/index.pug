@@ -1,0 +1,24 @@
+extends ../layouts/layout
+block content
+	a.btn.btn-primary(href='/admin/add-product', type='button') Add New Product
+
+	h2 Product List
+	table.table.table-striped
+		thead
+			tr
+				th Title
+				th Description
+				th(style='width:10%') Price
+				th(style='width:10%')
+		each product in products
+			tbody
+				tr
+					td= product.title
+					td
+						p= product.description.substring(0, 200) + '...'
+					td= product.price + ' $'
+					td
+						a.btn.btn-info.btn-sm(href='/admin/edit-product/'+product._id)
+							i.fa.fa-pencil-square-o
+						a.btn.btn-danger.btn-sm(href='/admin/delete-product/'+product._id)
+							i.fa.fa-trash-o

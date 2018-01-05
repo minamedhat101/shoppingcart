@@ -1,0 +1,25 @@
+extends ../layouts/layout
+block content
+  .col-sm-5
+    h3.text-right-xs Sign in to your account
+    p.text-muted.text-right-xs
+    if hasError
+      .alert.alert-danger
+        each message in messages
+          p= message
+        
+    .form-white
+      form(role='form', action="/user/signin", method="post")
+        .row
+          .col-sm-12.email
+            label(for='email') Email address
+            input#email.form-control(type='email', name="email", placeholder='Enter email')
+        .form-group
+          .row
+            .col-sm-12
+              label(for='password') Password
+              input#password.form-control(type='password', name="password", placeholder='Password')
+        input(type="hidden", name="_csrf" value=csrfToken)
+        button.btn.btn-block.btn-success(type='submit') Log In
+
+

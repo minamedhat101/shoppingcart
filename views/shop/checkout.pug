@@ -1,0 +1,241 @@
+extends ../layouts/layout
+block content
+	.container
+		.row(style='padding-top:25px; padding-bottom:25px;')
+			.col-md-12
+				#mainContentWrapper
+					.col-md-8.col-md-offset-2
+						h2(style='text-align: center;')
+							| Review Your Order & Complete Checkout
+						hr
+						a.btn.btn-info(href='/', style='width: 100%;') Add More Products & Services
+						hr
+						.shopping_cart
+							form#payment-form.form-horizontal(role='form', action='', method='post')
+								#accordion.panel-group
+									.panel.panel-default
+										.panel-heading
+											h4.panel-title
+												a(data-toggle='collapse', data-parent='#accordion', href='#collapseOne')
+													| Review
+													| Your Order
+										#collapseOne.panel-collapse.collapse.in
+											.panel-body
+												.items
+													.col-md-9
+														table.table
+															tr
+																td(colspan='2')
+																	a.btn.btn-warning.btn-sm.pull-right(href='/cart', title='Remove Items') X
+																	b
+																		| Edit Your Order
+															tr
+															td
+																each product in products
+																	ul
+																		li.col-sm-10= product.item.title 
+																		p.col-sm-2= 'x' + product.qty	
+													.col-md-3
+														div(style='text-align: center;')
+															h3 Order Total
+															h3
+																span(style='color:green;')= '$' + Math.round(session.cart.totalPrice * 100) / 100
+
+													h4.panel-title
+														div(style='text-align: center; width:100%;')
+															a.btn.btn-success(style='width:100%;', data-toggle='collapse', data-parent='#accordion', href='#collapseTwo', onclick="$('#payInfo').fadeIn();")
+																| Continue
+																| to Billing Information»
+								.panel.panel-default
+									.panel-heading
+										h4.panel-title
+											a(data-toggle='collapse', data-parent='#accordion', href='#collapseTwo')
+												| Contact
+												| and Billing Information
+									#collapseTwo.panel-collapse.collapse
+										.panel-body
+											b
+												| Help us keep your account safe and secure, please verify your billing
+												| information.
+											br
+											br
+											table.table.table-striped(style='font-weight: bold;')
+												tr
+													td(style='width: 175px;')
+														label(for='id_email') Email:
+													td
+														input#id_email.form-control(name='email', required='required', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_first_name') First name:
+													td
+														input#id_first_name.form-control(name='first_name', required='required', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_last_name') Last name:
+													td
+														input#id_last_name.form-control(name='last_name', required='required', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_address_line_1') Address:
+													td
+														input#id_address_line_1.form-control(name='address_line_1', required='required', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_address_line_2') Unit / Suite #:
+													td
+														input#id_address_line_2.form-control(name='address_line_2', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_city') City:
+													td
+														input#id_city.form-control(name='city', required='required', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_state') State:
+													td
+														select#id_state.form-control(name='state')
+															option(value='AK') Alaska
+															option(value='AL') Alabama
+															option(value='AZ') Arizona
+															option(value='AR') Arkansas
+															option(value='CA') California
+															option(value='CO') Colorado
+															option(value='CT') Connecticut
+															option(value='DE') Delaware
+															option(value='FL') Florida
+															option(value='GA') Georgia
+															option(value='HI') Hawaii
+															option(value='ID') Idaho
+															option(value='IL') Illinois
+															option(value='IN') Indiana
+															option(value='IA') Iowa
+															option(value='KS') Kansas
+															option(value='KY') Kentucky
+															option(value='LA') Louisiana
+															option(value='ME') Maine
+															option(value='MD') Maryland
+															option(value='MA') Massachusetts
+															option(value='MI') Michigan
+															option(value='MN') Minnesota
+															option(value='MS') Mississippi
+															option(value='MO') Missouri
+															option(value='MT') Montana
+															option(value='NE') Nebraska
+															option(value='NV') Nevada
+															option(value='NH') New Hampshire
+															option(value='NJ') New Jersey
+															option(value='NM') New Mexico
+															option(value='NY') New York
+															option(value='NC') North Carolina
+															option(value='ND') North Dakota
+															option(value='OH') Ohio
+															option(value='OK') Oklahoma
+															option(value='OR') Oregon
+															option(value='PA') Pennsylvania
+															option(value='RI') Rhode Island
+															option(value='SC') South Carolina
+															option(value='SD') South Dakota
+															option(value='TN') Tennessee
+															option(value='TX') Texas
+															option(value='UT') Utah
+															option(value='VT') Vermont
+															option(value='VA') Virginia
+															option(value='WA') Washington
+															option(value='DC') Washington D.C.
+															option(value='WV') West Virginia
+															option(value='WI') Wisconsin
+															option(value='WY') Wyoming
+												tr
+													td(style='width: 175px;')
+														label(for='id_postalcode') Postalcode:
+													td
+														input#id_postalcode.form-control(name='postalcode', required='required', type='text')
+												tr
+													td(style='width: 175px;')
+														label(for='id_phone') Phone:
+													td
+														input#id_phone.form-control(name='phone', type='text')
+
+										h4.panel-title
+											div(style='text-align: center;')
+												a#payInfo.btn.btn-success(data-toggle='collapse', data-parent='#accordion', href='#collapseThree', style='width:100%;',
+												 onclick="$('#pay-now').fadeIn();") Enter Payment Information »
+								.panel.panel-default
+									.panel-heading
+										h4.panel-title
+											a(data-toggle='collapse', data-parent='#accordion', href='#collapseThree')
+												b Payment Information
+									#collapseThree.panel-collapse.collapse
+										.panel-body
+											span.payment-errors
+											fieldset
+												legend What method would you like to pay with today?
+												.form-group
+													label.col-sm-3.control-label(for='card-holder-name')
+														| Name on
+														| Card
+													.col-sm-9
+														input#name-on-card.form-control(type='text', stripe-data='name', placeholder="Card Holder's Name")
+												.form-group
+													label.col-sm-3.control-label(for='card-number')
+														| Card
+														| Number
+													.col-sm-9
+														input#card-number.form-control(type='text', stripe-data='number', placeholder='Debit/Credit Card Number')
+														br
+														div
+															img.pull-right(src='https://s3.amazonaws.com/hiresnetwork/imgs/cc.png', style='max-width: 250px; padding-bottom: 20px;')
+													.form-group
+														label.col-sm-3.control-label(for='expiry-month')
+															| Expiration
+															| Date
+														.col-sm-9
+															.row
+																.col-xs-3
+																	select#card-exp-month.form-control.col-sm-2(data-stripe='exp-month', style='margin-left:5px;')
+																		option Month
+																		option(value='01') Jan (01)
+																		option(value='02') Feb (02)
+																		option(value='03') Mar (03)
+																		option(value='04') Apr (04)
+																		option(value='05') May (05)
+																		option(value='06') June (06)
+																		option(value='07') July (07)
+																		option(value='08') Aug (08)
+																		option(value='09') Sep (09)
+																		option(value='10') Oct (10)
+																		option(value='11') Nov (11)
+																		option(value='12') Dec (12)
+																.col-xs-3
+																	select#card-exp-year.form-control(data-stripe='exp-year')
+																		option(value='2016') 2016
+																		option(value='2017') 2017
+																		option(value='2018') 2018
+																		option(value='2019') 2019
+																		option(value='2020') 2020
+																		option(value='2021') 2021
+																		option(value='2022') 2022
+																		option(value='2023') 2023
+																		option(value='2024') 2024
+													.form-group
+														label.col-sm-3.control-label(for='cvv') Card CVC
+														.col-sm-3
+															input#card-cvc.form-control(type='text', stripe-data='cvc', placeholder='Security Code')
+													.form-group
+														.col-sm-offset-3.col-sm-9
+											button#pay-now.btn.btn-success.btn-lg(type='submit', style='width:100%;')
+												| Pay
+												| Now
+											br
+											div(style='text-align: left;')
+												br
+												|                                             By submiting this order you are agreeing to our 
+												a(href='/legal/billing/')
+													| universal
+													| billing agreement
+												| , and 
+												a(href='/legal/terms/') terms of service
+												| .
+												|                                             If you have any questions about our products or services please contact us
+												|                                             before placing this order.

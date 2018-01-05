@@ -1,0 +1,49 @@
+extends ../layouts/layout
+
+block content
+  .container
+    .row
+      .col-md-7
+        .panel.panel-default
+          .panel-heading
+            h4 User Profile
+          .panel-body
+            .box.box-info
+              .box-body
+                form(action='/user/profile/'+user.id+'?_csrf='+csrfToken, method="post" enctype="multipart/form-data")
+                  .col-sm-6
+                    div(align='center')
+                      if msg
+                        h3=msg
+
+                      label(for="profile")
+                        if user.image
+                          img#profile-image1.img-circle.img-responsive(alt='User Pic', src='../../images/'+ user.image)
+                        else
+                          img#profile-image1.img-circle.img-responsive(alt='User Pic',
+                            src='https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg')
+                        p(style='color:lightgrey;') click here to edit your profile picture
+                      .input-group.image-preview
+                        input.form-control.image-preview-filename(type='text', disabled='disabled')
+                        span.input-group-btn
+                          button.btn.btn-default.image-preview-clear(type='button', style='display:none;')
+                            span.glyphicon.glyphicon-remove
+                            |  Clear
+                          .btn.btn-default.image-preview-input
+                            span.glyphicon.glyphicon-folder-open
+                            span.image-preview-input-title Browse
+                            input#profile(type='file', accept='image/png, image/jpeg, image/gif', name='image')
+                      input(type="hidden", name="_csrf", value=csrfToken)
+                      input#upload-button.btn.btn-success(type='submit')
+                  br
+                .col-sm-6
+                  h4(style='color:#00b1b1;')= user.name
+                  h4(style='color:#00b1b1;')= user.email
+                  - var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+                  p=user.dateOfJoin.getDate()+' '+monthNames[user.dateOfJoin.getMonth()]+' '+user.dateOfJoin.getFullYear()
+                  if user.privilege
+                    span
+                      p Admin
+                  else
+                    span
+                      p User

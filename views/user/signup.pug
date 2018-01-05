@@ -1,0 +1,31 @@
+extends ../layouts/layout
+block content
+  .col-sm-5
+    h3.text-right-xs Sign Up to your account
+    p.text-muted.text-right-xs
+      | Please fill out the form below to create a new account.
+    if hasError
+      .alert.alert-danger
+        each message in messages
+          p= message
+
+    .form-white
+      form(role='form', action="/user/signup", method="post")
+        .row
+          .col-sm-12.email
+            label(for='email') Name:
+            input#email.form-control(type='text', name="name", placeholder='Enter youe Name')
+          .col-sm-12.email
+            label(for='email') Email address:
+            input#email.form-control(type='email', name="email", placeholder='Enter email')
+        .form-group
+          .row
+            .col-sm-12
+              label(for='password') Password:
+              input#password.form-control(type='password', name="password", placeholder='Password')
+        input(type="hidden", name="_csrf" value=csrfToken)
+        input(type="hidden", name="privilege")
+        input(type="hidden", name='dateOfJoin')
+        button.btn.btn-block.btn-success(type='submit') Create an account
+
+

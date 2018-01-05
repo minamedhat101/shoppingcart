@@ -1,0 +1,24 @@
+extends ../layouts/layout
+block content
+	.row
+	.col-xs-1
+	.col-xs-5
+		img(style='max-width:100%;', src=product.imagePath)
+	.col-xs-5(style='border:0px solid gray')
+		// Datos del vendedor y titulo del producto
+		h3= product.title
+		// Precios
+		h6
+			small Price
+		h3(style='margin-top:0px;')= 'US $' + product.price
+		// Botones de compra
+		.section(style='padding-bottom:20px;')
+			a.btn.btn-success.btn-block(href='/add-to-cart/' + product.id)
+				span.glyphicon.glyphicon-shopping-cart(style='margin-right:20px', aria-hidden='true')
+				|  Add to Cart
+	.col-xs-12
+		ul.menu-items
+			li.active Details
+		div(style='width:100%;border-top:1px solid silver')
+			p(style='padding:15px;')
+				small= product.description
